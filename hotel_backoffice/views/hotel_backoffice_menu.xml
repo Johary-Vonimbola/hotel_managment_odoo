@@ -1,0 +1,13 @@
+<odoo>
+    
+    <menuitem id="id_menu_root" name="Hotel Backoffice">
+        <menuitem name="Reservation" id="id_menu_action_reservation" action="action_hotel_backoffice_reservation" />
+        
+        <menuitem name="Equipment" id="id_menu_action_equipment" action="action_hotel_backoffice_equipment" />
+        
+        <menuitem name="Room" id="id_menu_action_room" action="action_hotel_backoffice_room" />
+
+        <menuitem name="Room type" id="id_menu_action_room_type" action="action_hotel_backoffice_room_type" />
+    </menuitem>
+
+</odoo>

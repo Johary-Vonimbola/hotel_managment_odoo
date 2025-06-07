@@ -1,0 +1,130 @@
+<odoo>
+    <!-- === 10 Équipements === -->
+    <record id="equipment_tv" model="hotel.backoffice.equipment">
+        <field name="name">Télévision</field>
+        <field name="description">Écran plat HD</field>
+        <field name="price">10.0</field>
+    </record>
+
+    <record id="equipment_wifi" model="hotel.backoffice.equipment">
+        <field name="name">Wi-Fi</field>
+        <field name="description">Connexion Internet rapide</field>
+        <field name="price">5.0</field>
+    </record>
+
+    <record id="equipment_clim" model="hotel.backoffice.equipment">
+        <field name="name">Climatisation</field>
+        <field name="description">Climatisation automatique</field>
+        <field name="price">8.0</field>
+    </record>
+
+    <record id="equipment_fridge" model="hotel.backoffice.equipment">
+        <field name="name">Mini-frigo</field>
+        <field name="description">Frigo avec boissons</field>
+        <field name="price">6.0</field>
+    </record>
+
+    <record id="equipment_coffee" model="hotel.backoffice.equipment">
+        <field name="name">Machine à café</field>
+        <field name="description">Machine à capsules</field>
+        <field name="price">4.0</field>
+    </record>
+
+    <record id="equipment_safe" model="hotel.backoffice.equipment">
+        <field name="name">Coffre-fort</field>
+        <field name="description">Coffre sécurisé pour objets de valeur</field>
+        <field name="price">3.0</field>
+    </record>
+
+    <record id="equipment_balcony" model="hotel.backoffice.equipment">
+        <field name="name">Balcon</field>
+        <field name="description">Balcon privé avec vue</field>
+        <field name="price">7.0</field>
+    </record>
+
+    <record id="equipment_jacuzzi" model="hotel.backoffice.equipment">
+        <field name="name">Jacuzzi</field>
+        <field name="description">Bain à remous privé</field>
+        <field name="price">20.0</field>
+    </record>
+
+    <record id="equipment_desk" model="hotel.backoffice.equipment">
+        <field name="name">Bureau</field>
+        <field name="description">Bureau pour travail</field>
+        <field name="price">2.0</field>
+    </record>
+
+    <record id="equipment_tv4k" model="hotel.backoffice.equipment">
+        <field name="name">Télévision 4K</field>
+        <field name="description">TV ultra HD 4K 55 pouces</field>
+        <field name="price">12.0</field>
+    </record>
+
+    <!-- === Types de chambre === -->
+    <record id="room_type_single" model="hotel.backoffice.room.type">
+        <field name="name">Simple</field>
+    </record>
+
+    <record id="room_type_double" model="hotel.backoffice.room.type">
+        <field name="name">Double</field>
+    </record>
+
+    <record id="room_type_luxury" model="hotel.backoffice.room.type">
+        <field name="name">Luxe</field>
+    </record>
+
+    <!-- === 6 Chambres === -->
+    <record id="room_101" model="hotel.backoffice.room">
+        <field name="name">Chambre 101</field>
+        <field name="max_allowed_person">1</field>
+        <field name="state">available</field>
+        <field name="base_price">45.0</field>
+        <field name="room_type_id" ref="room_type_single"/>
+        <field name="equipment_ids" eval="[(6, 0, [ref('equipment_wifi'), ref('equipment_desk')])]"/>
+    </record>
+
+    <record id="room_102" model="hotel.backoffice.room">
+        <field name="name">Chambre 102</field>
+        <field name="max_allowed_person">2</field>
+        <field name="state">available</field>
+        <field name="base_price">60.0</field>
+        <field name="room_type_id" ref="room_type_double"/>
+        <field name="equipment_ids" eval="[(6, 0, [ref('equipment_tv'), ref('equipment_fridge'), ref('equipment_safe')])]"/>
+    </record>
+
+    <record id="room_103" model="hotel.backoffice.room">
+        <field name="name">Chambre 103</field>
+        <field name="max_allowed_person">1</field>
+        <field name="state">booked</field>
+        <field name="base_price">50.0</field>
+        <field name="room_type_id" ref="room_type_single"/>
+        <!-- Sans équipement -->
+    </record>
+
+    <record id="room_201" model="hotel.backoffice.room">
+        <field name="name">Chambre 201</field>
+        <field name="max_allowed_person">2</field>
+        <field name="state">available</field>
+        <field name="base_price">70.0</field>
+        <field name="room_type_id" ref="room_type_double"/>
+        <field name="equipment_ids" eval="[(6, 0, [ref('equipment_tv4k'), ref('equipment_balcony')])]"/>
+    </record>
+
+    <record id="room_202" model="hotel.backoffice.room">
+        <field name="name">Chambre 202</field>
+        <field name="max_allowed_person">2</field>
+        <field name="state">booked</field>
+        <field name="base_price">85.0</field>
+        <field name="room_type_id" ref="room_type_luxury"/>
+        <field name="equipment_ids" eval="[(6, 0, [ref('equipment_jacuzzi'), ref('equipment_clim'), ref('equipment_coffee')])]"/>
+    </record>
+
+    <record id="room_203" model="hotel.backoffice.room">
+        <field name="name">Chambre 203</field>
+        <field name="max_allowed_person">1</field>
+        <field name="state">available</field>
+        <field name="base_price">38.0</field>
+        <field name="room_type_id" ref="room_type_single"/>
+        <!-- Sans équipement -->
+    </record>
+</odoo>

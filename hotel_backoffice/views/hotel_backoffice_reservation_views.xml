@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View hotel.backoffice.reservation View List -->
+    <record id="view_hotel_backoffice_reservation_list" model="ir.ui.view">
+        <field name="name">view.hotel.backoffice.reservation.list</field>
+        <field name="model">hotel.backoffice.reservation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="state" widget="statusbar"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- View hotel.backoffice.reservation form -->
+    <record id="view_hotel_backoffice_reservation_form" model="ir.ui.view">
+        <field name="name">view.hotel.backoffice.reservation.form</field>
+        <field name="model">hotel.backoffice.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Hotel Backoffice Reservation">
+                <header>
+                    <field name="state" widget="statusbar" />
+                    <button invisible="state != 'booked'" type="object" name="state_check_in" string="Check In" class="btn btn-info" />
+                    <button invisible="state != 'booked'" type="object" name="state_cancel" string="Cancel" class="btn btn-danger" />
+                    <button invisible="state != 'check_in'" type="object" name="state_check_out" string="Check Out" class="btn btn-info" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Name..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <div>
+                            <label for="total_reservation" />
+                            <h3>
+                                <field name="total_reservation" readonly='True' />
+                            </h3>
+                        </div>
+                        <field name="check_in" />
+                        <field name="check_out" />
+                        <field name="nb_of_occupants" />
+                        <field name="room_id" readonly="state != 'booked'" />
+                        <field name="client_id" readonly="state != 'booked'" />
+                    </group>
+                    <notebook>
+                        <page string="Reservation line">
+                            <field name="reservation_line_ids" type="xml">
+                                <list>
+                                    <field name="equipment_id" />
+                                    <field name="price" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Default equipments">
+                            <field name="default_equipment_ids" type="xml" readonly="True">
+                                <list>
+                                    <field name="name" />
+                                    <field name="price" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View hotel.backoffice.reservation search -->
+    <record id="view_hotel_backoffice_reservation_search" model="ir.ui.view">
+        <field name="name">view.hotel.backoffice.reservation.search</field>
+        <field name="model">hotel.backoffice.reservation</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action hotel.backoffice.reservation -->
+    <record id="action_hotel_backoffice_reservation" model="ir.actions.act_window">
+        <field name="name">Hotel Backoffice Reservation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.backoffice.reservation</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Hotel Backoffice Reservation.
+            </p>
+        </field>
+    </record>
+
+</odoo>

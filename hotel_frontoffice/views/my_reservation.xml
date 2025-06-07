@@ -1,0 +1,181 @@
+<odoo>
+    <data>
+        <!-- My Reservations Page -->
+        <template id="my_reservation">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <h2 class="text-center mb-4" style="color: #003580;">My Reservations</h2>
+                    <div class="row">
+                        <t t-foreach="reservations" t-as="reservation">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-lg">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #003580;">
+                                            <t t-esc="reservation.room_id.name"/>
+                                        </h5>
+                                        
+                                        <div class="mb-3">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <i class="fa fa-home me-2 text-muted small"></i>
+                                                <span class="text-muted small">
+                                                    <t t-esc="reservation.room_id.room_type_id.name"/>
+                                                </span>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <i class="fa fa-calendar me-2 text-muted small"></i>
+                                                <span class="text-muted small">
+                                                    <t t-esc="reservation.check_in"/> to <t t-esc="reservation.check_out"/>
+                                                </span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa fa-user me-2 text-muted small"></i>
+                                                <span class="text-muted small">
+                                                    <t t-esc="reservation.nb_of_occupants"/> guest(s)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                                            <span class="fw-bold" style="color: #003580;">
+                                                <t t-esc="reservation.total_reservation"/>
+                                            </span>
+                                            <a t-att-href="'/hotel/reservations/details?reservation_id=%s' % reservation.id" 
+                                               class="btn btn-sm text-white" 
+                                               style="background-color: #003580;">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                        
+                        <t t-if="not reservations">
+                            <div class="col-12 text-center py-5">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-info-circle me-2"></i>
+                                    You don't have any reservations yet.
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- Reservation Details Page -->
+        <template id="my_reservation_details">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h2 class="text-center mb-4" style="color: #003580;">Reservation Details</h2>
+                            
+                            <div class="card border-0 shadow-sm rounded-lg">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between">
+                                        <h4 style="color: #003580;">
+                                            <t t-esc="reservation.room_id.name"/>
+                                        </h4>
+                                        <div class="d-flex justify-content-around gap-1">
+                                            <t t-if="reservation.state == 'booked'">
+                                                <a t-att-href="'/hotel/reservations/update_state?state=check_in&amp;reservation_id=%s' % reservation.id" class="btn btn-info">
+                                                    <i class="fa fa-sign-in-alt me-1"></i> Check In
+                                                </a>
+                                                <a t-att-href="'/hotel/reservations/update_state?state=cancel&amp;reservation_id=%s' % reservation.id" class="btn btn-danger">
+                                                    <i class="fa fa-times-circle me-1"></i> Cancel
+                                                </a>
+                                            </t>
+                                            <t t-if="reservation.state == 'check_in'">
+                                                <a t-att-href="'/hotel/reservations/update_state?state=check_out&amp;reservation_id=%s' % reservation.id" class="btn btn-success">
+                                                    <i class="fa fa-sign-out-alt me-1"></i> Check Out
+                                                </a>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <p><strong><i class="fa fa-home me-2"></i>Room Type:</strong> <t t-esc="reservation.room_id.room_type_id.name"/></p>
+                                            <p><strong><i class="fa fa-calendar me-2"></i>Check-in:</strong> <t t-esc="reservation.check_in"/></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong><i class="fa fa-calendar me-2"></i>Check-out:</strong> <t t-esc="reservation.check_out"/></p>
+                                            <p><strong><i class="fa fa-user me-2"></i>Guests:</strong> <t t-esc="reservation.nb_of_occupants"/></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+                                                <strong>
+                                                    <i class="fa fa-info-circle me-2"></i>Status:
+                                                </strong>
+                                                <span t-if="reservation.state == 'booked'" class="badge bg-primary">
+                                                    <i class="fa fa-calendar-check me-1"></i> Booked
+                                                </span>
+                                                <span t-if="reservation.state == 'check_in'" class="badge bg-info text-dark">
+                                                    <i class="fa fa-sign-in-alt me-1"></i> Check In
+                                                </span>
+                                                <span t-if="reservation.state == 'check_out'" class="badge bg-success">
+                                                    <i class="fa fa-sign-out-alt me-1"></i> Check Out
+                                                </span>
+                                                <span t-if="reservation.state == 'cancelled'" class="badge bg-danger">
+                                                    <i class="fa fa-times-circle me-1"></i> Cancelled
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-light p-3 rounded mt-3">
+                                        <h5 style="color: #003580;">Price Summary</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Base Price</span>
+                                            <span><t t-esc="reservation.room_id.base_price"/></span>
+                                        </div>
+                                        <t t-foreach="reservation.default_equipment_ids" t-as="d_equipment">
+                                            <div class="d-flex justify-content-between">
+                                                <span><t t-esc="d_equipment.name" /></span>
+                                                <span><t t-esc="d_equipment.price"/></span>
+                                            </div>
+                                        </t>
+                                        
+                                        <t t-foreach="lines" t-as="line">
+                                            <div class="d-flex justify-content-between mt-2">
+                                                <span><t t-esc="line.equipment_id.name"/></span>
+                                                <span>+<t t-esc="line.price"/></span>
+                                            </div>
+                                        </t>
+                                        
+                                        <hr />
+                                        
+                                        <div class="d-flex justify-content-between fw-bold">
+                                            <span>Total</span>
+                                            <span style="color: #003580;"><t t-esc="reservation.total_reservation"/></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <h5 style="color: #003580;">Additional Services</h5>
+                                        <t t-if="lines">
+                                            <ul class="list-group">
+                                                <t t-foreach="lines" t-as="line">
+                                                    <li class="list-group-item border-0">
+                                                        <i class="fa fa-check-circle text-primary me-2"></i>
+                                                        <t t-esc="line.equipment_id.name"/> (+<t t-esc="line.price"/>)
+                                                    </li>
+                                                </t>
+                                            </ul>
+                                        </t>
+                                        <t t-if="not lines">
+                                            <div class="alert alert-light">
+                                                No additional services selected.
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

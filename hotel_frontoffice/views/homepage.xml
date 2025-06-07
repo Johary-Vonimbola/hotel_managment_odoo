@@ -1,0 +1,164 @@
+<odoo>
+    <data>
+        <!-- Homepage - Room Listing (Booking.com-style cards) -->
+        <template id="homepage">
+            <t t-call="website.layout">
+                <div id="wrap" class="container mt-4">
+                    <h1 class="mb-4 text-center" style="color: #003580; font-weight: 600;">Find Your Perfect Stay</h1>
+                    <div class="row">
+                        <t t-foreach="rooms" t-as="room">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
+                                    <!-- Room Image (placeholder - replace with your image field) -->
+                                    <div class="position-relative" style="height: 180px; background: #f5f5f5;">
+                                        <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
+                                            <span class="text-muted">Room Image</span>
+                                        </div>
+                                        <div class="position-absolute top-0 end-0 bg-primary text-white px-2 py-1 small" style="width: fit-content;">
+                                            <t t-esc="room.room_type_id.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-2" style="color: #003580;">
+                                            <t t-esc="room.name"/>
+                                            <label>
+                                                <t t-esc="room.state" />
+                                            </label>
+                                        </h5>
+                                        <p class="card-text text-muted small mb-3">
+                                            <t t-esc="room.description"/>
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="fs-5 fw-bold" style="color: #003580;">
+                                                    <t t-esc="room.base_price"/> 
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <a t-att-href="'/hotel/book?room_id=%s' % room.id" class="btn btn-primary py-2 px-3 rounded-pill" style="background-color: #003580; border: none; color: #fff; position: relative; z-index: 3;">
+                                                    Book Now
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <!-- Room Details Page (Booking.com-style form) -->
+        <template id="room_details">
+            <t t-call="website.layout">
+                <div class="container mt-4">
+                    <div class="row">
+                        <!-- Booking Form Column -->
+                        <div class="col-lg-6 pe-lg-4">
+                            <div class="card border-0 shadow-sm rounded-lg p-4 mb-4">
+                                <h2 class="mb-4" style="color: #003580;">Book: <t t-esc="room.name"/></h2>
+                                <form action="/hotel/book/submit" method="POST">
+                                    <input type="hidden" name="room_id" t-att-value="room.id"/>
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                    <!-- Date Inputs -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="check_in" class="form-label fw-bold small">Check-in</label>
+                                            <input type="date" name="check_in" class="form-control rounded-pill py-2" t-att-value="today" required='True'/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="check_out" class="form-label fw-bold small">Check-out</label>
+                                            <input type="date" name="check_out" class="form-control rounded-pill py-2" t-att-value="tomorrow" required='True'/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Occupants -->
+                                    <div class="mb-3">
+                                        <label for="nb_of_occupants" class="form-label fw-bold small">Number of Guests</label>
+                                        <input type="number" name="nb_of_occupants" class="form-control rounded-pill py-2" min="1" max="room.max_allowed_person" required='True'/>
+                                    </div>
+
+                                    <!-- Equipment Checkboxes -->
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold small">Additional Services</label>
+                                        <div class="border-top pt-3">
+                                            <t t-foreach="equipments" t-as="equipment">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" t-att-id="'equip_%s' % equipment.id" t-att-name="'added_equipments'" t-att-value="equipment.id"/>
+                                                    <label class="form-check-label d-flex justify-content-between w-100" t-att-for="'equip_%s' % equipment.id">
+                                                        <span><t t-esc="equipment.name"/></span>
+                                                        <span class="text-primary">+<t t-esc="equipment.price"/></span>
+                                                    </label>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn w-100 py-2 rounded-pill text-white fw-bold" style="background-color: #003580;">
+                                        Confirm Booking
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Room Info Column -->
+                        <div class="col-lg-6 ps-lg-4">
+                            <div class="card border-0 shadow-sm rounded-lg overflow-hidden">
+                                <!-- Room Image (placeholder) -->
+                                <div style="height: 200px; background: #f5f5f5;" class="d-flex align-items-center justify-content-center">
+                                    <span class="text-muted">Room Preview</span>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="mb-3" style="color: #003580;">Room Details</h4>
+                                    <div class="mb-3">
+                                        <p class="mb-2"><strong class="text-dark">Description:</strong> <t t-esc="room.description"/></p>
+                                        <p class="mb-2"><strong class="text-dark">Type:</strong> <t t-esc="room.room_type_id.name"/></p>
+                                        <p class="mb-2"><strong class="text-dark">Max Guests:</strong> <t t-esc="room.max_allowed_person"/></p>
+                                    </div>
+
+                                    <!-- Price Summary -->
+                                    <div class="bg-light p-3 rounded mb-4">
+                                        <h5 class="mb-3" style="color: #003580;">Price Summary</h5>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="text-muted">Base Price</span>
+                                            <span><t t-esc="room.base_price"/> </span>
+                                        </div>
+                                        <t t-foreach="room.equipment_ids" t-as="equip">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="text-muted"><t t-esc="equip.name"/></span>
+                                                <span>+<t t-esc="equip.price"/></span>
+                                            </div>
+                                        </t>
+                                        <hr/>
+                                        <div class="d-flex justify-content-between fw-bold">
+                                            <span>Total</span>
+                                            <span style="color: #003580;"><t t-esc="room.total_price"/></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Included Amenities -->
+                                    <div>
+                                        <h5 class="mb-3" style="color: #003580;">Included Amenities</h5>
+                                        <div class="row">
+                                            <t t-foreach="room.equipment_ids" t-as="equip">
+                                                <div class="col-6 mb-2">
+                                                    <i class="fa fa-check text-primary me-2"></i>
+                                                    <t t-esc="equip.name"/>
+                                                </div>
+                                            </t>
+                                            <t t-if="not room.equipment_ids">
+                                                <div class="text-muted">No amenities listed.</div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
