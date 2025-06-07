@@ -43,4 +43,4 @@ Le module inclut des données de démonstration pour faciliter les tests en envi
 1. Cloner le dépôt :
 ```bash
 git clone https://github.com/Johary-Vonimbola/hotel_managment_odoo.git
-python odoo-bin -c <odoo.conf> -u hotel_backoffice, hotel_front_office
+python odoo-bin -c <odoo.conf> -u hotel_backoffice, hotel_frontoffice
