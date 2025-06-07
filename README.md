@@ -4,6 +4,8 @@ Ce projet est une solution complète de **gestion d’hôtel** développée sur 
 
 ---
 
+Execute: python odoo-bin -c <odoo.conf> -u hotel_backoffice, hotel_front_office
+
 ## 📌 Fonctionnalités principales
 
 ### 🧾 Front Office (Website - clients)
