@@ -81,7 +81,8 @@
         <field name="base_price">45.0</field>
         <field name="room_type_id" ref="room_type_single"/>
         <field name="equipment_ids" eval="[(6, 0, [ref('equipment_wifi'), ref('equipment_desk')])]"/>
-    </record>
+        <field name="image_1920" type="base64" file="hotel_backoffice/static/demo/room_1.jpg"/>
+      </record>
 
     <record id="room_102" model="hotel.backoffice.room">
         <field name="name">Chambre 102</field>
@@ -90,7 +91,8 @@
         <field name="base_price">60.0</field>
         <field name="room_type_id" ref="room_type_double"/>
         <field name="equipment_ids" eval="[(6, 0, [ref('equipment_tv'), ref('equipment_fridge'), ref('equipment_safe')])]"/>
-    </record>
+        <field name="image_1920" type="base64" file="hotel_backoffice/static/demo/room_2.jpg"/>
+      </record>
 
     <record id="room_103" model="hotel.backoffice.room">
         <field name="name">Chambre 103</field>
@@ -99,7 +101,8 @@
         <field name="base_price">50.0</field>
         <field name="room_type_id" ref="room_type_single"/>
         <!-- Sans équipement -->
-    </record>
+        <field name="image_1920" type="base64" file="hotel_backoffice/static/demo/room_3.jpg"/>
+      </record>
 
     <record id="room_201" model="hotel.backoffice.room">
         <field name="name">Chambre 201</field>
@@ -108,7 +111,8 @@
         <field name="base_price">70.0</field>
         <field name="room_type_id" ref="room_type_double"/>
         <field name="equipment_ids" eval="[(6, 0, [ref('equipment_tv4k'), ref('equipment_balcony')])]"/>
-    </record>
+        <field name="image_1920" type="base64" file="hotel_backoffice/static/demo/room_4.jpg"/>
+      </record>
 
     <record id="room_202" model="hotel.backoffice.room">
         <field name="name">Chambre 202</field>
@@ -117,7 +121,8 @@
         <field name="base_price">85.0</field>
         <field name="room_type_id" ref="room_type_luxury"/>
         <field name="equipment_ids" eval="[(6, 0, [ref('equipment_jacuzzi'), ref('equipment_clim'), ref('equipment_coffee')])]"/>
-    </record>
+        <field name="image_1920" type="base64" file="hotel_backoffice/static/demo/room_5.jpg"/>
+      </record>
 
     <record id="room_203" model="hotel.backoffice.room">
         <field name="name">Chambre 203</field>
@@ -126,5 +131,6 @@
         <field name="base_price">38.0</field>
         <field name="room_type_id" ref="room_type_single"/>
         <!-- Sans équipement -->
-    </record>
+        <field name="image_1920" type="base64" file="hotel_backoffice/static/demo/room_6.jpg"/>
+      </record>
 </odoo>

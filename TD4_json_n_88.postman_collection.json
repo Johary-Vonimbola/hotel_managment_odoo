@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "44c95df3-5613-4947-8e1b-cfc15518cea8",
+		"name": "TD4_json_n_88",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39748546"
+	},
+	"item": [
+		{
+			"name": "List rooms",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rooms/available",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rooms",
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Room details",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/rooms/{{room_id}}/details",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rooms",
+						"{{room_id}}",
+						"details"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_id\": 2,\n    \"room_id\": 3,\n    \"check_in\": \"2025-06-07\",\n    \"check_out\": \"2025-06-08\",\n    \"nb_of_occupants\": 2,\n    \"added_equipments\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/reservations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My reservations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/reservations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reservation details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/reservations/{{reservation_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"reservations",
+						"{{reservation_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update reservation state",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"state\": \"check_in\"\n    //check_in (prise)\n    //check_out (liberation)\n    //cancel (annuler) seulement si c'est encore etat 'booked'\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/reservations/{{reservation_id}}/state",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"reservations",
+						"{{reservation_id}}",
+						"state"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

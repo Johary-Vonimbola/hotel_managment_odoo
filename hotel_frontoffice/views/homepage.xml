@@ -11,9 +11,11 @@
                                 <div class="card h-100 border-0 shadow-sm rounded-lg overflow-hidden">
                                     <!-- Room Image (placeholder - replace with your image field) -->
                                     <div class="position-relative" style="height: 180px; background: #f5f5f5;">
-                                        <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
-                                            <span class="text-muted">Room Image</span>
-                                        </div>
+                                        <img t-att-src="'data:image/*;base64,%s' % room.image_1920" 
+                                            class="w-100 h-100 object-fit-cover" 
+                                            alt="Image de la chambre"/>
+
+
                                         <div class="position-absolute top-0 end-0 bg-primary text-white px-2 py-1 small" style="width: fit-content;">
                                             <t t-esc="room.room_type_id.name"/>
                                         </div>
@@ -107,9 +109,9 @@
                         <div class="col-lg-6 ps-lg-4">
                             <div class="card border-0 shadow-sm rounded-lg overflow-hidden">
                                 <!-- Room Image (placeholder) -->
-                                <div style="height: 200px; background: #f5f5f5;" class="d-flex align-items-center justify-content-center">
-                                    <span class="text-muted">Room Preview</span>
-                                </div>
+                                 <img t-att-src="'data:image/*;base64,%s' % room.image_1920" 
+                                    class="w-100 h-100 object-fit-cover"    
+                                    alt="Image de la chambre"/>
                                 <div class="card-body">
                                     <h4 class="mb-3" style="color: #003580;">Room Details</h4>
                                     <div class="mb-3">

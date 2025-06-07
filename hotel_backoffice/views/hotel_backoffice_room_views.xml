@@ -35,6 +35,9 @@
                         <field name="room_type_id" />
                         <field name="total_price" readonly='True' />
                     </group>
+                    <group string="Image">
+                        <field name="image_1920" widget="image" class="oe_avatar"/>
+                    </group>
                     <notebook>
                         <page string="Equipment">
                             <field type="xml" name="equipment_ids">

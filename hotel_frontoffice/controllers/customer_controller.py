@@ -1,15 +1,22 @@
 from odoo import http
 from odoo.http import request
 from datetime import date, timedelta
+import base64
 
 class HotelFrontoffice(http.Controller):
     @http.route('/', auth='user', website=True)
     def index(self, **kw):
+        rooms = request.env["hotel.backoffice.room"].sudo().search([
+            ("state", "=", "available")
+        ])
+
+        for room in rooms:
+            room.image_data_url = base64.b64encode(room.image_1920).decode("utf-8") if room.image_1920 else False
+
         return request.render('hotel_frontoffice.homepage', {
-            'rooms': request.env["hotel.backoffice.room"].search([
-                ("state", "=", "available")
-            ])
+            'rooms': rooms
         })
+
 
     @http.route("/hotel/book", auth="user", website=True)
     def booking(self, room_id = None, **kw):
@@ -65,7 +72,7 @@ class HotelFrontoffice(http.Controller):
         request.env["hotel.backoffice.reservation"].sudo().create({
             "name": f"RES - {str(date.today())}",
             "room_id": room_id,
-            "client_id": self._get_current_user().id,
+            "client_id": self._get_current_user().partner_id.id,
             "check_in": check_in,
             "check_out": check_out,
             "nb_of_occupants": occupants,
@@ -77,7 +84,7 @@ class HotelFrontoffice(http.Controller):
     @http.route("/hotel/reservations", auth="user", website=True)
     def get_my_reservation(self, **kw):
         reservations = request.env["hotel.backoffice.reservation"].search([
-            ('client_id', '=', self._get_current_user().id)
+            ('client_id', '=', self._get_current_user().partner_id.id)
         ])
         return request.render('hotel_frontoffice.my_reservation', {
             "reservations": reservations
@@ -91,7 +98,7 @@ class HotelFrontoffice(http.Controller):
             return request.not_found()
 
         reservation = request.env["hotel.backoffice.reservation"].sudo().browse(reservation_id)
-        if not reservation or reservation.client_id.id != self._get_current_user().id:
+        if not reservation or reservation.client_id.id != self._get_current_user().partner_id.id:
             return request.not_found()
 
         return request.render("hotel_frontoffice.my_reservation_details", {
